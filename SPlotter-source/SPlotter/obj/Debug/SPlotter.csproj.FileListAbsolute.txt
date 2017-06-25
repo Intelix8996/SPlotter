@@ -1,0 +1,17 @@
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\SPlotter.exe
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\SPlotter.pdb
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Debug\SPlotter.csprojResolveAssemblyReference.cache
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Debug\SPlotter.Form1.resources
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Debug\SPlotter.Properties.Resources.resources
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Debug\SPlotter.csproj.GenerateResource.Cache
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Debug\SPlotter.exe
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Debug\SPlotter.pdb
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\LiveCharts.dll
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\LiveCharts.WinForms.dll
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\LiveCharts.Wpf.dll
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\LiveCharts.pdb
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\LiveCharts.xml
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\LiveCharts.WinForms.pdb
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\LiveCharts.WinForms.xml
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\LiveCharts.Wpf.pdb
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\LiveCharts.Wpf.xml

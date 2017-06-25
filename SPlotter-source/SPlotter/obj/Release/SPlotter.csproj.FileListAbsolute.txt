@@ -1,0 +1,16 @@
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Release\SPlotter.exe
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Release\SPlotter.pdb
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Release\LiveCharts.dll
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Release\LiveCharts.WinForms.dll
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Release\LiveCharts.Wpf.dll
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Release\LiveCharts.pdb
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Release\LiveCharts.xml
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Release\LiveCharts.WinForms.pdb
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Release\LiveCharts.WinForms.xml
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Release\LiveCharts.Wpf.pdb
+H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Release\LiveCharts.Wpf.xml
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.Form1.resources
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.Properties.Resources.resources
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.csproj.GenerateResource.Cache
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.exe
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.pdb
