@@ -16,14 +16,20 @@ namespace SPlotter
 {
     public partial class Form1 : Form
     {
-        List<LineSeries> Series = new List<LineSeries>();
+        List<LineSeries> PointSeries = new List<LineSeries>();
+        List<StepLineSeries> LineSeries = new List<StepLineSeries>();
         List<ChartValues<int>> Axles = new List<ChartValues<int>>();
         string[] SerialBufferList = { };
         string SerialBuffer = "";
 
+        public bool isSettingsOpen = false;
+        public bool isRangeAddEnabled = false;
+        List<ChartValues<int>> BufferRangeList = new List<ChartValues<int>>();
+
         public Form1()
         {
             InitializeComponent();
+
             serialPort1.PortName = "COM1";
             serialPort1.BaudRate = 9600;
             serialPort1.ReadTimeout = 500;
@@ -39,9 +45,6 @@ namespace SPlotter
                 .Y(model => model.Value);           
 
             Charting.For<MeasureModel>(mapper);
-
-            Series.Add(new LineSeries());
-            Axles.Add(new ChartValues<int>());
 
             Graph.DisableAnimations = false;
             Graph.AnimationsSpeed = new System.TimeSpan(0,0,0,0,150);
@@ -70,14 +73,12 @@ namespace SPlotter
                 }
             });
 
-            for (int i = 0; i < Series.Count; ++i)
+            for (int i = 0; i < PointSeries.Count; ++i)
             {
-                Graph.Series.Add(Series[i]);
-                Series[i] = ConfigureSeries(Series[i]);
-                Series[i].Values = Axles[i];
+                Graph.Series.Add(PointSeries[i]);
+                PointSeries[i] = ConfigurePointSeries(PointSeries[i]);
+                PointSeries[i].Values = Axles[i];
             }
-
-            AxleSelect.Items.Add(Series[0].Name);
         }
 
         private void Open_Button_Click(object sender, EventArgs e)
@@ -117,11 +118,19 @@ namespace SPlotter
 
             try
             {
-                if (!UpdateGraphTimer.Enabled)
+                if (!UpdateGraphTimer.Enabled && !isRangeAddEnabled)
                 {
                     for (int i = 0; i < Axles.Count; ++i)
                     {
                         try { Axles[i].Add(Convert.ToInt32(SerialBufferList[i])); }
+                        catch { }
+                    }
+                }
+                else if (isRangeAddEnabled)
+                {
+                    for (int i = 0; i < Axles.Count; ++i)
+                    {
+                        try { BufferRangeList[i].Add(Convert.ToInt32(SerialBufferList[i])); }
                         catch { }
                     }
                 }
@@ -140,7 +149,7 @@ namespace SPlotter
             StatusLabel1.Text = str;
         }
 
-        LineSeries ConfigureSeries(LineSeries Ser)
+        private LineSeries ConfigurePointSeries(LineSeries Ser)
         {
             Ser.Name = "Axle";
             Ser.StrokeThickness = 2.5f;
@@ -153,9 +162,21 @@ namespace SPlotter
             return Ser;
         }
 
+        private StepLineSeries ConfigureLineSeries(StepLineSeries Ser)
+        {
+            Ser.Name = "Axle";
+            Ser.StrokeThickness = 2.5f;
+            Ser.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(28, 142, 196));
+            Ser.Fill = System.Windows.Media.Brushes.Transparent;
+            Ser.PointGeometrySize = 5;
+            Ser.PointForeground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(34, 46, 49));
+
+            return Ser;
+        }
+
         private void UpdateGraphTimer_Tick(object sender, EventArgs e)
         {
-            if (UpdateGraphTimer.Enabled && serialPort1.IsOpen)
+            if (UpdateGraphTimer.Enabled && serialPort1.IsOpen && !isRangeAddEnabled)
             {
                 for (int i = 0; i < Axles.Count; ++i)
                 {
@@ -163,39 +184,85 @@ namespace SPlotter
                     catch { }
                 }
             }
+            else if (UpdateGraphTimer.Enabled && serialPort1.IsOpen && isRangeAddEnabled)
+            {
+                for (int i = 0; i < Axles.Count; ++i)
+                {
+                    try { Axles[i].AddRange(BufferRangeList[i]); BufferRangeList[i].Clear(); }
+                    catch { }
+                }
+            }
         }
 
         private void AddAxle_Button_Click(object sender, EventArgs e)
         {
-            Series.Add(new LineSeries());
-            Axles.Add(new ChartValues<int>());
+            if (FromPoints_RadioButton.Checked)
+            {
+                PointSeries.Add(new LineSeries());
+                Axles.Add(new ChartValues<int>());
+                BufferRangeList.Add(new ChartValues<int>());
 
-            Graph.Series.Add(Series[Series.Count - 1]);
-            Series[Series.Count - 1] = ConfigureSeries(Series[Series.Count - 1]);
-            Series[Series.Count - 1].Values = Axles[Series.Count - 1];
+                Graph.Series.Add(PointSeries[PointSeries.Count - 1]);
+                PointSeries[PointSeries.Count - 1] = ConfigurePointSeries(PointSeries[PointSeries.Count - 1]);
+                PointSeries[PointSeries.Count - 1].Values = Axles[PointSeries.Count - 1];
 
-            if (NameInput.Text == "")
-                Series[Series.Count - 1].Name = "Axle" + Convert.ToString(Series.Count - 1);
-            else
-                Series[Series.Count - 1].Name = NameInput.Text;
+                if (NameInput.Text == "")
+                    PointSeries[PointSeries.Count - 1].Name = "Axle" + Convert.ToString(PointSeries.Count);
+                else
+                    PointSeries[PointSeries.Count - 1].Name = NameInput.Text;
 
-            Series[Series.Count - 1].Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(ColorPicker_Button.BackColor.R, ColorPicker_Button.BackColor.G, ColorPicker_Button.BackColor.B));
+                PointSeries[PointSeries.Count - 1].Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(ColorPicker_Button.BackColor.R, ColorPicker_Button.BackColor.G, ColorPicker_Button.BackColor.B));
 
-            AxleSelect.Items.Add(Series[Series.Count - 1].Name);
+                AxleSelect.Items.Add(PointSeries[PointSeries.Count - 1].Name);
+            }
+            else if (FromLines_RadioButton.Checked)
+            {
+                LineSeries.Add(new StepLineSeries());
+                Axles.Add(new ChartValues<int>());
+                BufferRangeList.Add(new ChartValues<int>());
+
+                Graph.Series.Add(LineSeries[LineSeries.Count - 1]);
+                LineSeries[LineSeries.Count - 1] = ConfigureLineSeries(LineSeries[LineSeries.Count - 1]);
+                LineSeries[LineSeries.Count - 1].Values = Axles[LineSeries.Count - 1];
+
+                if (NameInput.Text == "")
+                    LineSeries[LineSeries.Count - 1].Name = "LineAxle" + Convert.ToString(LineSeries.Count);
+                else
+                    LineSeries[LineSeries.Count - 1].Name = NameInput.Text;
+
+                LineSeries[LineSeries.Count - 1].Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(ColorPicker_Button.BackColor.R, ColorPicker_Button.BackColor.G, ColorPicker_Button.BackColor.B));
+                LineSeries[LineSeries.Count - 1].AlternativeStroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(ColorPicker_Button.BackColor.R, ColorPicker_Button.BackColor.G, ColorPicker_Button.BackColor.B));
+
+                AxleSelect.Items.Add(LineSeries[LineSeries.Count - 1].Name);
+            }
         }
 
         private void RemoveAxle_Button_Click(object sender, EventArgs e)
         {
             try
             {
-                if (AxleSelect.Items.Count > 1)
+                if (AxleSelect.Items.Count > 0)
                 {
-                    Series.RemoveAt(Series.Count - 1);
-                    Axles.RemoveAt(Series.Count - 1);
+                    if (PointSeries.Count > 0)
+                    {
+                        PointSeries.RemoveAt(PointSeries.Count - 1);
+                        Axles.RemoveAt(PointSeries.Count - 1);
+                        BufferRangeList.RemoveAt(PointSeries.Count - 1);
 
-                    Graph.Series.RemoveAt(Series.Count - 1);
+                        Graph.Series.RemoveAt(PointSeries.Count - 1);
 
-                    AxleSelect.Items.RemoveAt(Series.Count - 1);
+                        AxleSelect.Items.RemoveAt(AxleSelect.Items.Count - 1);
+                    }
+                    else
+                    {
+                        LineSeries.RemoveAt(LineSeries.Count - 1);
+                        Axles.RemoveAt(LineSeries.Count - 1);
+                        BufferRangeList.RemoveAt(PointSeries.Count - 1);
+
+                        Graph.Series.RemoveAt(LineSeries.Count - 1);
+
+                        AxleSelect.Items.RemoveAt(AxleSelect.Items.Count - 1);
+                    }
                 }
             }
             catch { }
@@ -216,7 +283,7 @@ namespace SPlotter
             ColorSelectDialog.ShowDialog();
             ColorSelectDialog.AllowFullOpen = true;
             ColorSelectDialog.FullOpen = true;
-
+            
             ColorPicker_Button.BackColor = ColorSelectDialog.Color;
         }
 
@@ -230,10 +297,50 @@ namespace SPlotter
 
         private void ApplyCOMPortChanges_Button_Click(object sender, EventArgs e)
         {
-            serialPort1.PortName = COMPortNameText.Text;
-            serialPort1.BaudRate = Convert.ToInt32(COMPortBaudRateText.Text);
-            serialPort1.ReadTimeout = Convert.ToInt32(COMPortReadTimeoutText.Text);
-            serialPort1.WriteTimeout = Convert.ToInt32(COMPortWriteTimeoutText.Text);
+            try
+            {
+                serialPort1.PortName = COMPortNameText.Text;
+                serialPort1.BaudRate = Convert.ToInt32(COMPortBaudRateText.Text);
+                serialPort1.ReadTimeout = Convert.ToInt32(COMPortReadTimeoutText.Text);
+                serialPort1.WriteTimeout = Convert.ToInt32(COMPortWriteTimeoutText.Text);
+            }
+            catch (System.InvalidOperationException)
+            {
+                StatusLabel1.Text = "Error: port is open";
+            }
+        }
+
+        private void Settings_Button_Click(object sender, EventArgs e)
+        {
+            if (!isSettingsOpen)
+            {
+                isSettingsOpen = true;
+                Form2 Form2 = new Form2();
+                Form2.Show();
+            }
+        }
+
+        private void SendToPort_Button_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                serialPort1.Write(PortSendInputField.Text);
+                PortSendInputField.Text = "";
+            }
+            catch { }
+        }
+
+        private void PortSendInputField_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                try
+                {
+                    serialPort1.Write(PortSendInputField.Text);
+                    PortSendInputField.Text = "";
+                }
+                catch { }
+            }
         }
     }
 }

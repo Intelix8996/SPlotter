@@ -37,7 +37,6 @@
             this.UpdateGraphTimer = new System.Windows.Forms.Timer(this.components);
             this.AddAxle_Button = new System.Windows.Forms.Button();
             this.RemoveAxle_Button = new System.Windows.Forms.Button();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.NameInput = new System.Windows.Forms.TextBox();
             this.ColorSelectDialog = new System.Windows.Forms.ColorDialog();
             this.PortMonitor_Text = new System.Windows.Forms.Label();
@@ -49,9 +48,12 @@
             this.Close_Button = new System.Windows.Forms.ToolStripButton();
             this.ClearPlot_Button = new System.Windows.Forms.ToolStripButton();
             this.ResetView_Button = new System.Windows.Forms.ToolStripButton();
+            this.Settings_Button = new System.Windows.Forms.ToolStripButton();
             this.NameLabel = new System.Windows.Forms.Label();
             this.ColorLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.FromLines_RadioButton = new System.Windows.Forms.RadioButton();
+            this.FromPoints_RadioButton = new System.Windows.Forms.RadioButton();
             this.AxlesGroupLabel = new System.Windows.Forms.Label();
             this.COMSettingsGroup = new System.Windows.Forms.Panel();
             this.ApplyCOMPortChanges_Button = new System.Windows.Forms.Button();
@@ -64,11 +66,14 @@
             this.COMPortBaudRateLabel = new System.Windows.Forms.Label();
             this.COMPortNameLabel = new System.Windows.Forms.Label();
             this.COMSettingsLabel = new System.Windows.Forms.Label();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.PortSendInputField = new System.Windows.Forms.TextBox();
+            this.SendToPort_Button = new System.Windows.Forms.Button();
             this.Status.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.Tools.SuspendLayout();
             this.panel1.SuspendLayout();
             this.COMSettingsGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // serialPort1
@@ -82,7 +87,7 @@
             // 
             this.Status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusLabel1});
-            this.Status.Location = new System.Drawing.Point(0, 658);
+            this.Status.Location = new System.Drawing.Point(0, 636);
             this.Status.Name = "Status";
             this.Status.Size = new System.Drawing.Size(987, 22);
             this.Status.TabIndex = 4;
@@ -102,7 +107,7 @@
             this.Graph.Cursor = System.Windows.Forms.Cursors.Cross;
             this.Graph.Location = new System.Drawing.Point(350, 33);
             this.Graph.Name = "Graph";
-            this.Graph.Size = new System.Drawing.Size(637, 624);
+            this.Graph.Size = new System.Drawing.Size(637, 589);
             this.Graph.TabIndex = 5;
             this.Graph.Text = "Graph";
             // 
@@ -113,7 +118,7 @@
             // 
             // AddAxle_Button
             // 
-            this.AddAxle_Button.Location = new System.Drawing.Point(249, 20);
+            this.AddAxle_Button.Location = new System.Drawing.Point(249, 7);
             this.AddAxle_Button.Name = "AddAxle_Button";
             this.AddAxle_Button.Size = new System.Drawing.Size(75, 23);
             this.AddAxle_Button.TabIndex = 6;
@@ -123,7 +128,7 @@
             // 
             // RemoveAxle_Button
             // 
-            this.RemoveAxle_Button.Location = new System.Drawing.Point(249, 75);
+            this.RemoveAxle_Button.Location = new System.Drawing.Point(249, 36);
             this.RemoveAxle_Button.Name = "RemoveAxle_Button";
             this.RemoveAxle_Button.Size = new System.Drawing.Size(75, 23);
             this.RemoveAxle_Button.TabIndex = 7;
@@ -133,7 +138,7 @@
             // 
             // NameInput
             // 
-            this.NameInput.Location = new System.Drawing.Point(80, 23);
+            this.NameInput.Location = new System.Drawing.Point(85, 7);
             this.NameInput.Name = "NameInput";
             this.NameInput.Size = new System.Drawing.Size(100, 20);
             this.NameInput.TabIndex = 10;
@@ -154,19 +159,19 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.SerialMonitor_Text.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.SerialMonitor_Text.Font = new System.Drawing.Font("Orator Std", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SerialMonitor_Text.Location = new System.Drawing.Point(12, 434);
+            this.SerialMonitor_Text.Location = new System.Drawing.Point(12, 424);
             this.SerialMonitor_Text.MaxLength = 60000;
             this.SerialMonitor_Text.Multiline = true;
             this.SerialMonitor_Text.Name = "SerialMonitor_Text";
             this.SerialMonitor_Text.ReadOnly = true;
             this.SerialMonitor_Text.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.SerialMonitor_Text.Size = new System.Drawing.Size(331, 211);
+            this.SerialMonitor_Text.Size = new System.Drawing.Size(331, 170);
             this.SerialMonitor_Text.TabIndex = 13;
             // 
             // ColorPicker_Button
             // 
             this.ColorPicker_Button.BackColor = System.Drawing.Color.SteelBlue;
-            this.ColorPicker_Button.Location = new System.Drawing.Point(80, 78);
+            this.ColorPicker_Button.Location = new System.Drawing.Point(85, 33);
             this.ColorPicker_Button.Name = "ColorPicker_Button";
             this.ColorPicker_Button.Size = new System.Drawing.Size(100, 20);
             this.ColorPicker_Button.TabIndex = 14;
@@ -174,7 +179,7 @@
             // 
             // Tools
             // 
-            this.Tools.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.Tools.BackColor = System.Drawing.SystemColors.ControlLight;
             this.Tools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.Tools.ImageScalingSize = new System.Drawing.Size(40, 40);
             this.Tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -182,7 +187,8 @@
             this.Open_Button,
             this.Close_Button,
             this.ClearPlot_Button,
-            this.ResetView_Button});
+            this.ResetView_Button,
+            this.Settings_Button});
             this.Tools.Location = new System.Drawing.Point(0, 0);
             this.Tools.Name = "Tools";
             this.Tools.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -240,23 +246,33 @@
             this.ResetView_Button.ToolTipText = "Reset View";
             this.ResetView_Button.Click += new System.EventHandler(this.ResetView_Button_Click);
             // 
+            // Settings_Button
+            // 
+            this.Settings_Button.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Settings_Button.Image = ((System.Drawing.Image)(resources.GetObject("Settings_Button.Image")));
+            this.Settings_Button.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Settings_Button.Name = "Settings_Button";
+            this.Settings_Button.Size = new System.Drawing.Size(44, 44);
+            this.Settings_Button.Text = "Settings";
+            this.Settings_Button.Click += new System.EventHandler(this.Settings_Button_Click);
+            // 
             // NameLabel
             // 
             this.NameLabel.AutoSize = true;
-            this.NameLabel.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.NameLabel.Location = new System.Drawing.Point(12, 23);
+            this.NameLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.NameLabel.Location = new System.Drawing.Point(17, 7);
             this.NameLabel.Name = "NameLabel";
-            this.NameLabel.Size = new System.Drawing.Size(63, 20);
+            this.NameLabel.Size = new System.Drawing.Size(61, 23);
             this.NameLabel.TabIndex = 16;
             this.NameLabel.Text = "Name:";
             // 
             // ColorLabel
             // 
             this.ColorLabel.AutoSize = true;
-            this.ColorLabel.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F);
-            this.ColorLabel.Location = new System.Drawing.Point(12, 78);
+            this.ColorLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.ColorLabel.Location = new System.Drawing.Point(17, 33);
             this.ColorLabel.Name = "ColorLabel";
-            this.ColorLabel.Size = new System.Drawing.Size(58, 20);
+            this.ColorLabel.Size = new System.Drawing.Size(54, 23);
             this.ColorLabel.TabIndex = 17;
             this.ColorLabel.Text = "Color:";
             // 
@@ -264,6 +280,8 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.FromLines_RadioButton);
+            this.panel1.Controls.Add(this.FromPoints_RadioButton);
             this.panel1.Controls.Add(this.RemoveAxle_Button);
             this.panel1.Controls.Add(this.AddAxle_Button);
             this.panel1.Controls.Add(this.NameInput);
@@ -274,6 +292,28 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(331, 109);
             this.panel1.TabIndex = 18;
+            // 
+            // FromLines_RadioButton
+            // 
+            this.FromLines_RadioButton.AutoSize = true;
+            this.FromLines_RadioButton.Location = new System.Drawing.Point(169, 73);
+            this.FromLines_RadioButton.Name = "FromLines_RadioButton";
+            this.FromLines_RadioButton.Size = new System.Drawing.Size(76, 17);
+            this.FromLines_RadioButton.TabIndex = 19;
+            this.FromLines_RadioButton.Text = "From Lines";
+            this.FromLines_RadioButton.UseVisualStyleBackColor = true;
+            // 
+            // FromPoints_RadioButton
+            // 
+            this.FromPoints_RadioButton.AutoSize = true;
+            this.FromPoints_RadioButton.Checked = true;
+            this.FromPoints_RadioButton.Location = new System.Drawing.Point(34, 73);
+            this.FromPoints_RadioButton.Name = "FromPoints_RadioButton";
+            this.FromPoints_RadioButton.Size = new System.Drawing.Size(80, 17);
+            this.FromPoints_RadioButton.TabIndex = 18;
+            this.FromPoints_RadioButton.TabStop = true;
+            this.FromPoints_RadioButton.Text = "From Points";
+            this.FromPoints_RadioButton.UseVisualStyleBackColor = true;
             // 
             // AxlesGroupLabel
             // 
@@ -346,40 +386,40 @@
             // COMPortWriteTimeoutLabel
             // 
             this.COMPortWriteTimeoutLabel.AutoSize = true;
-            this.COMPortWriteTimeoutLabel.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.COMPortWriteTimeoutLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.COMPortWriteTimeoutLabel.Location = new System.Drawing.Point(12, 154);
             this.COMPortWriteTimeoutLabel.Name = "COMPortWriteTimeoutLabel";
-            this.COMPortWriteTimeoutLabel.Size = new System.Drawing.Size(216, 20);
+            this.COMPortWriteTimeoutLabel.Size = new System.Drawing.Size(203, 23);
             this.COMPortWriteTimeoutLabel.TabIndex = 21;
             this.COMPortWriteTimeoutLabel.Text = "COM Port Write Timeout:";
             // 
             // COMPortReadTimeOutLabel
             // 
             this.COMPortReadTimeOutLabel.AutoSize = true;
-            this.COMPortReadTimeOutLabel.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.COMPortReadTimeOutLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.COMPortReadTimeOutLabel.Location = new System.Drawing.Point(12, 108);
             this.COMPortReadTimeOutLabel.Name = "COMPortReadTimeOutLabel";
-            this.COMPortReadTimeOutLabel.Size = new System.Drawing.Size(212, 20);
+            this.COMPortReadTimeOutLabel.Size = new System.Drawing.Size(200, 23);
             this.COMPortReadTimeOutLabel.TabIndex = 20;
             this.COMPortReadTimeOutLabel.Text = "COM Port Read Timeout:";
             // 
             // COMPortBaudRateLabel
             // 
             this.COMPortBaudRateLabel.AutoSize = true;
-            this.COMPortBaudRateLabel.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.COMPortBaudRateLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.COMPortBaudRateLabel.Location = new System.Drawing.Point(12, 61);
             this.COMPortBaudRateLabel.Name = "COMPortBaudRateLabel";
-            this.COMPortBaudRateLabel.Size = new System.Drawing.Size(183, 20);
+            this.COMPortBaudRateLabel.Size = new System.Drawing.Size(173, 23);
             this.COMPortBaudRateLabel.TabIndex = 19;
             this.COMPortBaudRateLabel.Text = "COM Port Baud Rate:";
             // 
             // COMPortNameLabel
             // 
             this.COMPortNameLabel.AutoSize = true;
-            this.COMPortNameLabel.Font = new System.Drawing.Font("MS Reference Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.COMPortNameLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.COMPortNameLabel.Location = new System.Drawing.Point(12, 14);
             this.COMPortNameLabel.Name = "COMPortNameLabel";
-            this.COMPortNameLabel.Size = new System.Drawing.Size(145, 20);
+            this.COMPortNameLabel.Size = new System.Drawing.Size(140, 23);
             this.COMPortNameLabel.TabIndex = 18;
             this.COMPortNameLabel.Text = "COM Port Name:";
             // 
@@ -392,33 +432,57 @@
             this.COMSettingsLabel.TabIndex = 21;
             this.COMSettingsLabel.Text = "COM Settings";
             // 
+            // PortSendInputField
+            // 
+            this.PortSendInputField.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.PortSendInputField.Font = new System.Drawing.Font("Orator Std", 9.2F, System.Drawing.FontStyle.Bold);
+            this.PortSendInputField.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.PortSendInputField.Location = new System.Drawing.Point(12, 600);
+            this.PortSendInputField.Name = "PortSendInputField";
+            this.PortSendInputField.Size = new System.Drawing.Size(251, 22);
+            this.PortSendInputField.TabIndex = 22;
+            this.PortSendInputField.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PortSendInputField_KeyDown);
+            // 
+            // SendToPort_Button
+            // 
+            this.SendToPort_Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.SendToPort_Button.Location = new System.Drawing.Point(268, 600);
+            this.SendToPort_Button.Name = "SendToPort_Button";
+            this.SendToPort_Button.Size = new System.Drawing.Size(75, 22);
+            this.SendToPort_Button.TabIndex = 23;
+            this.SendToPort_Button.Text = "Send";
+            this.SendToPort_Button.UseVisualStyleBackColor = true;
+            this.SendToPort_Button.Click += new System.EventHandler(this.SendToPort_Button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(987, 680);
+            this.ClientSize = new System.Drawing.Size(987, 658);
+            this.Controls.Add(this.Status);
+            this.Controls.Add(this.SendToPort_Button);
+            this.Controls.Add(this.PortSendInputField);
+            this.Controls.Add(this.Tools);
             this.Controls.Add(this.COMSettingsLabel);
             this.Controls.Add(this.COMSettingsGroup);
             this.Controls.Add(this.AxlesGroupLabel);
-            this.Controls.Add(this.Tools);
             this.Controls.Add(this.SerialMonitor_Text);
-            this.Controls.Add(this.Status);
             this.Controls.Add(this.Graph);
             this.Controls.Add(this.PortMonitor_Text);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "SPlotter v1.0";
+            this.Text = "SPlotter v1.1";
             this.Status.ResumeLayout(false);
             this.Status.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.Tools.ResumeLayout(false);
             this.Tools.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.COMSettingsGroup.ResumeLayout(false);
             this.COMSettingsGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -428,8 +492,6 @@
         public System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.StatusStrip Status;
         private System.Windows.Forms.ToolStripStatusLabel StatusLabel1;
-        private LiveCharts.WinForms.CartesianChart Graph;
-        private System.Windows.Forms.Timer UpdateGraphTimer;
         private System.Windows.Forms.Button AddAxle_Button;
         private System.Windows.Forms.Button RemoveAxle_Button;
         private System.Windows.Forms.BindingSource bindingSource1;
@@ -459,6 +521,13 @@
         private System.Windows.Forms.Label COMPortBaudRateLabel;
         private System.Windows.Forms.Label COMPortNameLabel;
         private System.Windows.Forms.Button ApplyCOMPortChanges_Button;
+        private System.Windows.Forms.ToolStripButton Settings_Button;
+        public LiveCharts.WinForms.CartesianChart Graph;
+        private System.Windows.Forms.RadioButton FromLines_RadioButton;
+        private System.Windows.Forms.RadioButton FromPoints_RadioButton;
+        private System.Windows.Forms.TextBox PortSendInputField;
+        private System.Windows.Forms.Button SendToPort_Button;
+        public System.Windows.Forms.Timer UpdateGraphTimer;
     }
 }
 

@@ -7,6 +7,7 @@ namespace SPlotter
 {
     static class Program
     {
+        public static Form1 MainForm;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -15,7 +16,7 @@ namespace SPlotter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(MainForm = new Form1());
         }
     }
 }

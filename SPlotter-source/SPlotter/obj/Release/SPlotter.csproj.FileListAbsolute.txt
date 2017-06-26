@@ -14,3 +14,5 @@ H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.Properties.Reso
 H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.csproj.GenerateResource.Cache
 H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.exe
 H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.pdb
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.csprojResolveAssemblyReference.cache
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.Form2.resources
