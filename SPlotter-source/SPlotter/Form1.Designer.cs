@@ -52,6 +52,10 @@
             this.NameLabel = new System.Windows.Forms.Label();
             this.ColorLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.PointSize_InputField = new System.Windows.Forms.TextBox();
+            this.LineThickness_InputField = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.LineThicknessLabel = new System.Windows.Forms.Label();
             this.FromLines_RadioButton = new System.Windows.Forms.RadioButton();
             this.FromPoints_RadioButton = new System.Windows.Forms.RadioButton();
             this.AxlesGroupLabel = new System.Windows.Forms.Label();
@@ -118,7 +122,7 @@
             // 
             // AddAxle_Button
             // 
-            this.AddAxle_Button.Location = new System.Drawing.Point(249, 7);
+            this.AddAxle_Button.Location = new System.Drawing.Point(249, 3);
             this.AddAxle_Button.Name = "AddAxle_Button";
             this.AddAxle_Button.Size = new System.Drawing.Size(75, 23);
             this.AddAxle_Button.TabIndex = 6;
@@ -128,7 +132,7 @@
             // 
             // RemoveAxle_Button
             // 
-            this.RemoveAxle_Button.Location = new System.Drawing.Point(249, 36);
+            this.RemoveAxle_Button.Location = new System.Drawing.Point(249, 32);
             this.RemoveAxle_Button.Name = "RemoveAxle_Button";
             this.RemoveAxle_Button.Size = new System.Drawing.Size(75, 23);
             this.RemoveAxle_Button.TabIndex = 7;
@@ -138,7 +142,7 @@
             // 
             // NameInput
             // 
-            this.NameInput.Location = new System.Drawing.Point(85, 7);
+            this.NameInput.Location = new System.Drawing.Point(138, 7);
             this.NameInput.Name = "NameInput";
             this.NameInput.Size = new System.Drawing.Size(100, 20);
             this.NameInput.TabIndex = 10;
@@ -171,7 +175,7 @@
             // ColorPicker_Button
             // 
             this.ColorPicker_Button.BackColor = System.Drawing.Color.SteelBlue;
-            this.ColorPicker_Button.Location = new System.Drawing.Point(85, 33);
+            this.ColorPicker_Button.Location = new System.Drawing.Point(138, 30);
             this.ColorPicker_Button.Name = "ColorPicker_Button";
             this.ColorPicker_Button.Size = new System.Drawing.Size(100, 20);
             this.ColorPicker_Button.TabIndex = 14;
@@ -260,7 +264,7 @@
             // 
             this.NameLabel.AutoSize = true;
             this.NameLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
-            this.NameLabel.Location = new System.Drawing.Point(17, 7);
+            this.NameLabel.Location = new System.Drawing.Point(9, 4);
             this.NameLabel.Name = "NameLabel";
             this.NameLabel.Size = new System.Drawing.Size(61, 23);
             this.NameLabel.TabIndex = 16;
@@ -270,7 +274,7 @@
             // 
             this.ColorLabel.AutoSize = true;
             this.ColorLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
-            this.ColorLabel.Location = new System.Drawing.Point(17, 33);
+            this.ColorLabel.Location = new System.Drawing.Point(9, 30);
             this.ColorLabel.Name = "ColorLabel";
             this.ColorLabel.Size = new System.Drawing.Size(54, 23);
             this.ColorLabel.TabIndex = 17;
@@ -280,6 +284,10 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.PointSize_InputField);
+            this.panel1.Controls.Add(this.LineThickness_InputField);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.LineThicknessLabel);
             this.panel1.Controls.Add(this.FromLines_RadioButton);
             this.panel1.Controls.Add(this.FromPoints_RadioButton);
             this.panel1.Controls.Add(this.RemoveAxle_Button);
@@ -293,10 +301,44 @@
             this.panel1.Size = new System.Drawing.Size(331, 109);
             this.panel1.TabIndex = 18;
             // 
+            // PointSize_InputField
+            // 
+            this.PointSize_InputField.Location = new System.Drawing.Point(138, 82);
+            this.PointSize_InputField.Name = "PointSize_InputField";
+            this.PointSize_InputField.Size = new System.Drawing.Size(100, 20);
+            this.PointSize_InputField.TabIndex = 25;
+            // 
+            // LineThickness_InputField
+            // 
+            this.LineThickness_InputField.Location = new System.Drawing.Point(138, 56);
+            this.LineThickness_InputField.Name = "LineThickness_InputField";
+            this.LineThickness_InputField.Size = new System.Drawing.Size(100, 20);
+            this.LineThickness_InputField.TabIndex = 24;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.label2.Location = new System.Drawing.Point(9, 79);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 23);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "Point Size:";
+            // 
+            // LineThicknessLabel
+            // 
+            this.LineThicknessLabel.AutoSize = true;
+            this.LineThicknessLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.LineThicknessLabel.Location = new System.Drawing.Point(7, 53);
+            this.LineThicknessLabel.Name = "LineThicknessLabel";
+            this.LineThicknessLabel.Size = new System.Drawing.Size(125, 23);
+            this.LineThicknessLabel.TabIndex = 21;
+            this.LineThicknessLabel.Text = "Line Thickness:";
+            // 
             // FromLines_RadioButton
             // 
             this.FromLines_RadioButton.AutoSize = true;
-            this.FromLines_RadioButton.Location = new System.Drawing.Point(169, 73);
+            this.FromLines_RadioButton.Location = new System.Drawing.Point(244, 84);
             this.FromLines_RadioButton.Name = "FromLines_RadioButton";
             this.FromLines_RadioButton.Size = new System.Drawing.Size(76, 17);
             this.FromLines_RadioButton.TabIndex = 19;
@@ -307,7 +349,7 @@
             // 
             this.FromPoints_RadioButton.AutoSize = true;
             this.FromPoints_RadioButton.Checked = true;
-            this.FromPoints_RadioButton.Location = new System.Drawing.Point(34, 73);
+            this.FromPoints_RadioButton.Location = new System.Drawing.Point(244, 61);
             this.FromPoints_RadioButton.Name = "FromPoints_RadioButton";
             this.FromPoints_RadioButton.Size = new System.Drawing.Size(80, 17);
             this.FromPoints_RadioButton.TabIndex = 18;
@@ -473,7 +515,7 @@
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "SPlotter v1.1";
+            this.Text = "SPlotter v1.1.2";
             this.Status.ResumeLayout(false);
             this.Status.PerformLayout();
             this.Tools.ResumeLayout(false);
@@ -528,6 +570,10 @@
         private System.Windows.Forms.TextBox PortSendInputField;
         private System.Windows.Forms.Button SendToPort_Button;
         public System.Windows.Forms.Timer UpdateGraphTimer;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label LineThicknessLabel;
+        private System.Windows.Forms.TextBox PointSize_InputField;
+        private System.Windows.Forms.TextBox LineThickness_InputField;
     }
 }
 

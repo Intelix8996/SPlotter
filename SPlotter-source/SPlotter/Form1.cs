@@ -211,6 +211,10 @@ namespace SPlotter
                 else
                     PointSeries[PointSeries.Count - 1].Name = NameInput.Text;
 
+                PointSeries[PointSeries.Count - 1].StrokeThickness = Convert.ToSingle(LineThickness_InputField.Text);
+
+                PointSeries[PointSeries.Count - 1].PointGeometrySize = Convert.ToSingle(PointSize_InputField.Text);
+
                 PointSeries[PointSeries.Count - 1].Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(ColorPicker_Button.BackColor.R, ColorPicker_Button.BackColor.G, ColorPicker_Button.BackColor.B));
 
                 AxleSelect.Items.Add(PointSeries[PointSeries.Count - 1].Name);
@@ -229,6 +233,10 @@ namespace SPlotter
                     LineSeries[LineSeries.Count - 1].Name = "LineAxle" + Convert.ToString(LineSeries.Count);
                 else
                     LineSeries[LineSeries.Count - 1].Name = NameInput.Text;
+
+                PointSeries[PointSeries.Count - 1].StrokeThickness = Convert.ToSingle(LineThickness_InputField.Text);
+
+                PointSeries[PointSeries.Count - 1].PointGeometrySize = Convert.ToSingle(PointSize_InputField.Text);
 
                 LineSeries[LineSeries.Count - 1].Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(ColorPicker_Button.BackColor.R, ColorPicker_Button.BackColor.G, ColorPicker_Button.BackColor.B));
                 LineSeries[LineSeries.Count - 1].AlternativeStroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(ColorPicker_Button.BackColor.R, ColorPicker_Button.BackColor.G, ColorPicker_Button.BackColor.B));
