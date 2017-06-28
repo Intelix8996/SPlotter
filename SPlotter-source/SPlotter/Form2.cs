@@ -20,11 +20,16 @@ namespace SPlotter
             TimerEnabled_CheckBox.Checked = TimerDelay_InputField.Enabled;
             TimerEnabled_CheckBox.Checked = RangeSelect_CheckBox.Enabled;
             TimerDelay_InputField.Text = Convert.ToString(Program.MainForm.UpdateGraphTimer.Interval);
+            HighPerformance_CheckBox.Checked = Program.MainForm.isHighPerformanceEnabled;
+            ThreadSleepTime_InputField.Text = Convert.ToString(Program.MainForm.ThreadSleepTime);
         }
 
         private void DisableAnimationsTickBox_CheckedChanged(object sender, EventArgs e)
         {
             Program.MainForm.Graph.DisableAnimations = DisableAnimationsTickBox.Checked;
+            HighPerformance_CheckBox.Enabled = DisableAnimationsTickBox.Checked;
+            ThreadSleepTime_InputField.Enabled = DisableAnimationsTickBox.Checked;
+            ThreadSleepLabel.Enabled = DisableAnimationsTickBox.Checked;
         }
 
         private void Form2_FormClosing(Object sender, FormClosingEventArgs e)
@@ -47,6 +52,17 @@ namespace SPlotter
         private void TimerDelay_InputField_TextChanged(object sender, EventArgs e)
         {
             Program.MainForm.UpdateGraphTimer.Interval = Convert.ToInt32(TimerDelay_InputField.Text);
+        }
+
+        private void HighPerformance_CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.MainForm.isHighPerformanceEnabled = HighPerformance_CheckBox.Checked;
+        }
+
+        private void ThreadSleepTime_InputField_TextChanged(object sender, EventArgs e)
+        {
+            if (ThreadSleepTime_InputField.Text != "")
+                Program.MainForm.ThreadSleepTime = Convert.ToInt32(ThreadSleepTime_InputField.Text);
         }
     }
 }

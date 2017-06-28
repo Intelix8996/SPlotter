@@ -307,6 +307,7 @@
             this.PointSize_InputField.Name = "PointSize_InputField";
             this.PointSize_InputField.Size = new System.Drawing.Size(100, 20);
             this.PointSize_InputField.TabIndex = 25;
+            this.PointSize_InputField.Text = "5";
             // 
             // LineThickness_InputField
             // 
@@ -314,6 +315,7 @@
             this.LineThickness_InputField.Name = "LineThickness_InputField";
             this.LineThickness_InputField.Size = new System.Drawing.Size(100, 20);
             this.LineThickness_InputField.TabIndex = 24;
+            this.LineThickness_InputField.Text = "2,5";
             // 
             // label2
             // 
@@ -515,7 +517,7 @@
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "SPlotter v1.1.2";
+            this.Text = "SPlotter v1.2";
             this.Status.ResumeLayout(false);
             this.Status.PerformLayout();
             this.Tools.ResumeLayout(false);

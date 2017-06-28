@@ -11,20 +11,28 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Configurations;
 using LiveCharts.WinForms;
+using LiveCharts.Geared;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SPlotter
 {
     public partial class Form1 : Form
     {
+        private HighPerformanceHandler Handler = new HighPerformanceHandler();
+
         List<LineSeries> PointSeries = new List<LineSeries>();
         List<StepLineSeries> LineSeries = new List<StepLineSeries>();
         List<ChartValues<int>> Axles = new List<ChartValues<int>>();
-        string[] SerialBufferList = { };
+        public string[] SerialBufferList = { };
         string SerialBuffer = "";
 
         public bool isSettingsOpen = false;
         public bool isRangeAddEnabled = false;
         List<ChartValues<int>> BufferRangeList = new List<ChartValues<int>>();
+        public bool isHighPerformanceEnabled = false;
+
+        public int ThreadSleepTime = 1;
 
         public Form1()
         {
@@ -108,17 +116,18 @@ namespace SPlotter
         private void Close_Button_Click(object sender, EventArgs e)
         {
             serialPort1.Close();
+            Handler.Stop();
+
         }
 
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             SerialBuffer = serialPort1.ReadLine();
-            SerialBuffer.IsNormalized(NormalizationForm.FormKC);
             SerialBufferList = SerialBuffer.Split('&');
 
             try
             {
-                if (!UpdateGraphTimer.Enabled && !isRangeAddEnabled)
+                if (!UpdateGraphTimer.Enabled && !isRangeAddEnabled && !isHighPerformanceEnabled)
                 {
                     for (int i = 0; i < Axles.Count; ++i)
                     {
@@ -126,13 +135,39 @@ namespace SPlotter
                         catch { }
                     }
                 }
-                else if (isRangeAddEnabled)
+                else if (isRangeAddEnabled && !isHighPerformanceEnabled)
                 {
                     for (int i = 0; i < Axles.Count; ++i)
                     {
                         try { BufferRangeList[i].Add(Convert.ToInt32(SerialBufferList[i])); }
                         catch { }
                     }
+                }
+                else if (isHighPerformanceEnabled)
+                {
+
+                    //lets keep in memory only the last 20000 records,
+                    //to keep everything running faster
+                    const int keepRecords = 20000;
+
+                    Action readFromTread = () =>
+                    {
+                        Thread.Sleep(ThreadSleepTime);
+                        Handler._trend = Convert.ToInt32(SerialBufferList[0]);
+                        //when multi threading avoid indexed calls like -> Values[0] 
+                        //instead enumerate the collection
+                        //ChartValues/GearedValues returns a thread safe copy once you enumerate it.
+                        //TIPS: use foreach instead of for
+                        //LINQ methods also enumerate the collections
+                        var first = Handler.Values.DefaultIfEmpty(0).FirstOrDefault();
+                        if (Handler.Values.Count > keepRecords - 1) Handler.Values.Remove(first);
+                        if (Handler.Values.Count < keepRecords) Handler.Values.Add(Handler._trend);
+                        Handler.IsHot = Handler._trend > 0;
+                        Handler.Count = Handler.Values.Count;
+                        Handler.CurrentLecture = Handler._trend;
+                    };
+
+                    Task.Factory.StartNew(readFromTread);
                 }
             }
             catch { }
@@ -196,7 +231,7 @@ namespace SPlotter
 
         private void AddAxle_Button_Click(object sender, EventArgs e)
         {
-            if (FromPoints_RadioButton.Checked)
+            if (FromPoints_RadioButton.Checked && !isHighPerformanceEnabled)
             {
                 PointSeries.Add(new LineSeries());
                 Axles.Add(new ChartValues<int>());
@@ -219,7 +254,7 @@ namespace SPlotter
 
                 AxleSelect.Items.Add(PointSeries[PointSeries.Count - 1].Name);
             }
-            else if (FromLines_RadioButton.Checked)
+            else if (FromLines_RadioButton.Checked && !isHighPerformanceEnabled)
             {
                 LineSeries.Add(new StepLineSeries());
                 Axles.Add(new ChartValues<int>());
@@ -234,14 +269,47 @@ namespace SPlotter
                 else
                     LineSeries[LineSeries.Count - 1].Name = NameInput.Text;
 
-                PointSeries[PointSeries.Count - 1].StrokeThickness = Convert.ToSingle(LineThickness_InputField.Text);
+                LineSeries[LineSeries.Count - 1].StrokeThickness = Convert.ToSingle(LineThickness_InputField.Text);
 
-                PointSeries[PointSeries.Count - 1].PointGeometrySize = Convert.ToSingle(PointSize_InputField.Text);
+                LineSeries[LineSeries.Count - 1].PointGeometrySize = Convert.ToSingle(PointSize_InputField.Text);
 
                 LineSeries[LineSeries.Count - 1].Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(ColorPicker_Button.BackColor.R, ColorPicker_Button.BackColor.G, ColorPicker_Button.BackColor.B));
                 LineSeries[LineSeries.Count - 1].AlternativeStroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(ColorPicker_Button.BackColor.R, ColorPicker_Button.BackColor.G, ColorPicker_Button.BackColor.B));
 
                 AxleSelect.Items.Add(LineSeries[LineSeries.Count - 1].Name);
+            }
+            else if (FromPoints_RadioButton.Checked && isHighPerformanceEnabled)
+            {
+                Graph.Series.Add(new GLineSeries
+                {
+                    Values = Handler.Values,
+
+                    Name = "NewGAxle",
+                    StrokeThickness = Convert.ToSingle(LineThickness_InputField.Text),
+                    Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(ColorPicker_Button.BackColor.R, ColorPicker_Button.BackColor.G, ColorPicker_Button.BackColor.B)),
+                    Fill = System.Windows.Media.Brushes.Transparent,
+                    LineSmoothness = 0.4f,
+                    PointGeometrySize = Convert.ToSingle(PointSize_InputField.Text),
+                    PointForeground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(34, 46, 49)),
+                });
+
+                AxleSelect.Items.Add("NewGAxle");
+            }
+            else if (FromLines_RadioButton.Checked && isHighPerformanceEnabled)
+            {
+                Graph.Series.Add(new GStepLineSeries
+                {
+                    Values = Handler.Values,
+
+                    Name = "NewGLineAxle",
+                    StrokeThickness = Convert.ToSingle(LineThickness_InputField.Text),
+                    Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(ColorPicker_Button.BackColor.R, ColorPicker_Button.BackColor.G, ColorPicker_Button.BackColor.B)),
+                    Fill = System.Windows.Media.Brushes.Transparent,
+                    PointGeometrySize = Convert.ToSingle(PointSize_InputField.Text),
+                    PointForeground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(34, 46, 49)),
+                });
+
+                AxleSelect.Items.Add("NewGLineAxle");
             }
         }
 
@@ -278,10 +346,15 @@ namespace SPlotter
 
         private void ClearPlot_Button_Click(object sender, EventArgs e)
         {
-            foreach (ChartValues<int> cv in Axles)
+            if (!isHighPerformanceEnabled)
             {
-                cv.Clear();
+                foreach (ChartValues<int> cv in Axles)
+                {
+                    cv.Clear();
+                }
             }
+            else
+                Handler.Clear();
 
             SerialMonitor_Text.Text = "";
         }
