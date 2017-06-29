@@ -517,7 +517,7 @@
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "SPlotter v1.2";
+            this.Text = "SPlotter v1.2.1";
             this.Status.ResumeLayout(false);
             this.Status.PerformLayout();
             this.Tools.ResumeLayout(false);

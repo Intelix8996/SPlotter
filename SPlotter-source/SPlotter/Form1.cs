@@ -116,8 +116,7 @@ namespace SPlotter
         private void Close_Button_Click(object sender, EventArgs e)
         {
             serialPort1.Close();
-            Handler.Stop();
-
+            Handler._trend = 0;
         }
 
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -150,24 +149,17 @@ namespace SPlotter
                     //to keep everything running faster
                     const int keepRecords = 20000;
 
-                    Action readFromTread = () =>
-                    {
-                        Thread.Sleep(ThreadSleepTime);
-                        Handler._trend = Convert.ToInt32(SerialBufferList[0]);
-                        //when multi threading avoid indexed calls like -> Values[0] 
-                        //instead enumerate the collection
-                        //ChartValues/GearedValues returns a thread safe copy once you enumerate it.
-                        //TIPS: use foreach instead of for
-                        //LINQ methods also enumerate the collections
-                        var first = Handler.Values.DefaultIfEmpty(0).FirstOrDefault();
-                        if (Handler.Values.Count > keepRecords - 1) Handler.Values.Remove(first);
-                        if (Handler.Values.Count < keepRecords) Handler.Values.Add(Handler._trend);
-                        Handler.IsHot = Handler._trend > 0;
-                        Handler.Count = Handler.Values.Count;
-                        Handler.CurrentLecture = Handler._trend;
-                    };
-
-                    Task.Factory.StartNew(readFromTread);
+                    Thread.Sleep(ThreadSleepTime);
+                    Handler._trend = Convert.ToInt32(SerialBufferList[0]);
+                    //when multi threading avoid indexed calls like -> Values[0] 
+                    //instead enumerate the collection
+                    //ChartValues/GearedValues returns a thread safe copy once you enumerate it.
+                    //TIPS: use foreach instead of for
+                    //LINQ methods also enumerate the collections
+                    //var first = Handler.Values.DefaultIfEmpty(0).FirstOrDefault();
+                    //if (Handler.Values.Count > keepRecords - 1) Handler.Values.Remove(first);
+                    if (Handler.Values.Count < keepRecords) Handler.Values.Add(Handler._trend);
+                    //Handler.Count = Handler.Values.Count;
                 }
             }
             catch { }

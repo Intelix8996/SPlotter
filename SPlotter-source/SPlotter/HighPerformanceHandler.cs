@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,16 +16,8 @@ namespace SPlotter
             Values = new GearedValues<double>().WithQuality(Quality.High);
         }
 
-        public bool IsReading { get; set; }
         public GearedValues<double> Values { get; set; }
         public double Count { get; set; }
-        public double CurrentLecture { get; set; }
-        public bool IsHot { get; set; }
-
-        public void Stop()
-        {
-            IsReading = false;
-        }
 
         public void Clear()
         {
