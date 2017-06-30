@@ -49,6 +49,7 @@
             this.ClearPlot_Button = new System.Windows.Forms.ToolStripButton();
             this.ResetView_Button = new System.Windows.Forms.ToolStripButton();
             this.Settings_Button = new System.Windows.Forms.ToolStripButton();
+            this.CPUButton = new System.Windows.Forms.ToolStripButton();
             this.NameLabel = new System.Windows.Forms.Label();
             this.ColorLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -70,9 +71,9 @@
             this.COMPortBaudRateLabel = new System.Windows.Forms.Label();
             this.COMPortNameLabel = new System.Windows.Forms.Label();
             this.COMSettingsLabel = new System.Windows.Forms.Label();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.PortSendInputField = new System.Windows.Forms.TextBox();
             this.SendToPort_Button = new System.Windows.Forms.Button();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.Status.SuspendLayout();
             this.Tools.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -192,7 +193,8 @@
             this.Close_Button,
             this.ClearPlot_Button,
             this.ResetView_Button,
-            this.Settings_Button});
+            this.Settings_Button,
+            this.CPUButton});
             this.Tools.Location = new System.Drawing.Point(0, 0);
             this.Tools.Name = "Tools";
             this.Tools.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -259,6 +261,16 @@
             this.Settings_Button.Size = new System.Drawing.Size(44, 44);
             this.Settings_Button.Text = "Settings";
             this.Settings_Button.Click += new System.EventHandler(this.Settings_Button_Click);
+            // 
+            // CPUButton
+            // 
+            this.CPUButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.CPUButton.Image = ((System.Drawing.Image)(resources.GetObject("CPUButton.Image")));
+            this.CPUButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CPUButton.Name = "CPUButton";
+            this.CPUButton.Size = new System.Drawing.Size(44, 44);
+            this.CPUButton.Text = "System Monitoring";
+            this.CPUButton.Click += new System.EventHandler(this.CPUButton_Click);
             // 
             // NameLabel
             // 
@@ -517,7 +529,7 @@
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "SPlotter v1.2.1";
+            this.Text = "SPlotter v1.3";
             this.Status.ResumeLayout(false);
             this.Status.PerformLayout();
             this.Tools.ResumeLayout(false);
@@ -576,6 +588,7 @@
         private System.Windows.Forms.Label LineThicknessLabel;
         private System.Windows.Forms.TextBox PointSize_InputField;
         private System.Windows.Forms.TextBox LineThickness_InputField;
+        private System.Windows.Forms.ToolStripButton CPUButton;
     }
 }
 

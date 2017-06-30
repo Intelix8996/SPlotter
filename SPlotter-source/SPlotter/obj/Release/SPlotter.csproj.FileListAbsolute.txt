@@ -17,3 +17,4 @@ H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.pdb
 H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.csprojResolveAssemblyReference.cache
 H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.Form2.resources
 H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Release\LiveCharts.Geared.dll
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Release\SPlotter.Form3.resources

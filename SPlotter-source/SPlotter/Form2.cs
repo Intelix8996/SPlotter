@@ -27,9 +27,6 @@ namespace SPlotter
         private void DisableAnimationsTickBox_CheckedChanged(object sender, EventArgs e)
         {
             Program.MainForm.Graph.DisableAnimations = DisableAnimationsTickBox.Checked;
-            HighPerformance_CheckBox.Enabled = DisableAnimationsTickBox.Checked;
-            ThreadSleepTime_InputField.Enabled = DisableAnimationsTickBox.Checked;
-            ThreadSleepLabel.Enabled = DisableAnimationsTickBox.Checked;
         }
 
         private void Form2_FormClosing(Object sender, FormClosingEventArgs e)

@@ -9,19 +9,15 @@ namespace SPlotter
 {
     class HighPerformanceHandler
     {
-        public int _trend;
-
-        public HighPerformanceHandler()
-        {
-            Values = new GearedValues<double>().WithQuality(Quality.High);
-        }
-
-        public GearedValues<double> Values { get; set; }
-        public double Count { get; set; }
+        public List<double> _trend = new List<double>();
+        public List<GearedValues<double>> Values = new List<GearedValues<double>>();
 
         public void Clear()
         {
-            Values.Clear();
+           for (int i = 0; i < Values.Count; ++i)
+            {
+                Values[i].Clear();
+            }
         }
     }
 }

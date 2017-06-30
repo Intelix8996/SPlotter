@@ -17,3 +17,4 @@ H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\LiveCharts.Wpf.pdb
 H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\LiveCharts.Wpf.xml
 H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Debug\SPlotter.Form2.resources
 H:\Visual Studio\Projects\SPlotter\SPlotter\bin\Debug\LiveCharts.Geared.dll
+H:\Visual Studio\Projects\SPlotter\SPlotter\obj\Debug\SPlotter.Form3.resources

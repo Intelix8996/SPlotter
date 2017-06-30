@@ -43,6 +43,8 @@
             // DisableAnimationsTickBox
             // 
             this.DisableAnimationsTickBox.AutoSize = true;
+            this.DisableAnimationsTickBox.Checked = true;
+            this.DisableAnimationsTickBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.DisableAnimationsTickBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
             this.DisableAnimationsTickBox.Location = new System.Drawing.Point(12, 12);
             this.DisableAnimationsTickBox.Name = "DisableAnimationsTickBox";
@@ -99,7 +101,8 @@
             // HighPerformance_CheckBox
             // 
             this.HighPerformance_CheckBox.AutoSize = true;
-            this.HighPerformance_CheckBox.Enabled = false;
+            this.HighPerformance_CheckBox.Checked = true;
+            this.HighPerformance_CheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.HighPerformance_CheckBox.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
             this.HighPerformance_CheckBox.Location = new System.Drawing.Point(12, 146);
             this.HighPerformance_CheckBox.Name = "HighPerformance_CheckBox";
@@ -112,7 +115,6 @@
             // ThreadSleepLabel
             // 
             this.ThreadSleepLabel.AutoSize = true;
-            this.ThreadSleepLabel.Enabled = false;
             this.ThreadSleepLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 12.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
             this.ThreadSleepLabel.Location = new System.Drawing.Point(8, 186);
             this.ThreadSleepLabel.Name = "ThreadSleepLabel";
@@ -131,7 +133,6 @@
             // 
             // ThreadSleepTime_InputField
             // 
-            this.ThreadSleepTime_InputField.Enabled = false;
             this.ThreadSleepTime_InputField.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.1F);
             this.ThreadSleepTime_InputField.Location = new System.Drawing.Point(175, 186);
             this.ThreadSleepTime_InputField.Name = "ThreadSleepTime_InputField";
@@ -154,6 +155,7 @@
             this.Controls.Add(this.TimerEnabled_CheckBox);
             this.Controls.Add(this.RangeSelect_CheckBox);
             this.Controls.Add(this.DisableAnimationsTickBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form2";
             this.Text = "Settings";

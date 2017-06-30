@@ -28,9 +28,10 @@ namespace SPlotter
         string SerialBuffer = "";
 
         public bool isSettingsOpen = false;
+        public bool isCPUMonitorOpen = false;
         public bool isRangeAddEnabled = false;
         List<ChartValues<int>> BufferRangeList = new List<ChartValues<int>>();
-        public bool isHighPerformanceEnabled = false;
+        public bool isHighPerformanceEnabled = true;
 
         public int ThreadSleepTime = 1;
 
@@ -54,7 +55,7 @@ namespace SPlotter
 
             Charting.For<MeasureModel>(mapper);
 
-            Graph.DisableAnimations = false;
+            Graph.DisableAnimations = true;
             Graph.AnimationsSpeed = new System.TimeSpan(0,0,0,0,150);
 
             Graph.Zoom = ZoomingOptions.Xy;
@@ -116,7 +117,6 @@ namespace SPlotter
         private void Close_Button_Click(object sender, EventArgs e)
         {
             serialPort1.Close();
-            Handler._trend = 0;
         }
 
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -145,21 +145,23 @@ namespace SPlotter
                 else if (isHighPerformanceEnabled)
                 {
 
-                    //lets keep in memory only the last 20000 records,
-                    //to keep everything running faster
-                    const int keepRecords = 20000;
-
                     Thread.Sleep(ThreadSleepTime);
-                    Handler._trend = Convert.ToInt32(SerialBufferList[0]);
+
+                    for (int i = 0; i < SerialBufferList.Length; ++i)
+                    {
+                        Handler._trend[i] = Convert.ToDouble(SerialBufferList[i]);
+                    }
+
                     //when multi threading avoid indexed calls like -> Values[0] 
                     //instead enumerate the collection
                     //ChartValues/GearedValues returns a thread safe copy once you enumerate it.
                     //TIPS: use foreach instead of for
                     //LINQ methods also enumerate the collections
-                    //var first = Handler.Values.DefaultIfEmpty(0).FirstOrDefault();
-                    //if (Handler.Values.Count > keepRecords - 1) Handler.Values.Remove(first);
-                    if (Handler.Values.Count < keepRecords) Handler.Values.Add(Handler._trend);
-                    //Handler.Count = Handler.Values.Count;
+
+                    for (int i = 0; i < Handler.Values.Count; ++i)
+                    {
+                        Handler.Values[i].Add(Handler._trend[i]);
+                    }
                 }
             }
             catch { }
@@ -272,9 +274,12 @@ namespace SPlotter
             }
             else if (FromPoints_RadioButton.Checked && isHighPerformanceEnabled)
             {
+                Handler.Values.Add(new GearedValues<double>().WithQuality(Quality.High));
+                Handler._trend.Add(new int());
+
                 Graph.Series.Add(new GLineSeries
                 {
-                    Values = Handler.Values,
+                    Values = Handler.Values[Handler.Values.Count - 1],
 
                     Name = "NewGAxle",
                     StrokeThickness = Convert.ToSingle(LineThickness_InputField.Text),
@@ -285,13 +290,19 @@ namespace SPlotter
                     PointForeground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(34, 46, 49)),
                 });
 
-                AxleSelect.Items.Add("NewGAxle");
+                if (NameInput.Text == "")
+                    AxleSelect.Items.Add("NewGAxle");
+                else
+                    AxleSelect.Items.Add(NameInput.Text);
             }
             else if (FromLines_RadioButton.Checked && isHighPerformanceEnabled)
             {
+                Handler.Values.Add(new GearedValues<double>().WithQuality(Quality.High));
+                Handler._trend.Add(new int());
+
                 Graph.Series.Add(new GStepLineSeries
                 {
-                    Values = Handler.Values,
+                    Values = Handler.Values[Handler.Values.Count - 1],
 
                     Name = "NewGLineAxle",
                     StrokeThickness = Convert.ToSingle(LineThickness_InputField.Text),
@@ -301,7 +312,10 @@ namespace SPlotter
                     PointForeground = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(34, 46, 49)),
                 });
 
-                AxleSelect.Items.Add("NewGLineAxle");
+                if (NameInput.Text == "")
+                    AxleSelect.Items.Add("NewGAxle");
+                else
+                    AxleSelect.Items.Add(NameInput.Text);
             }
         }
 
@@ -309,27 +323,16 @@ namespace SPlotter
         {
             try
             {
-                if (AxleSelect.Items.Count > 0)
+                if (AxleSelect.Items.Count > 0 && Graph.Series.Count > 0)
                 {
-                    if (PointSeries.Count > 0)
+                    Graph.Series.RemoveAt(Graph.Series.Count - 1);
+
+                    AxleSelect.Items.RemoveAt(AxleSelect.Items.Count - 1);
+
+                    if (isHighPerformanceEnabled)
                     {
-                        PointSeries.RemoveAt(PointSeries.Count - 1);
-                        Axles.RemoveAt(PointSeries.Count - 1);
-                        BufferRangeList.RemoveAt(PointSeries.Count - 1);
-
-                        Graph.Series.RemoveAt(PointSeries.Count - 1);
-
-                        AxleSelect.Items.RemoveAt(AxleSelect.Items.Count - 1);
-                    }
-                    else
-                    {
-                        LineSeries.RemoveAt(LineSeries.Count - 1);
-                        Axles.RemoveAt(LineSeries.Count - 1);
-                        BufferRangeList.RemoveAt(PointSeries.Count - 1);
-
-                        Graph.Series.RemoveAt(LineSeries.Count - 1);
-
-                        AxleSelect.Items.RemoveAt(AxleSelect.Items.Count - 1);
+                        Handler.Values.RemoveAt(Handler.Values.Count - 1);
+                        Handler._trend.RemoveAt(Handler._trend.Count - 1);
                     }
                 }
             }
@@ -413,6 +416,16 @@ namespace SPlotter
                     PortSendInputField.Text = "";
                 }
                 catch { }
+            }
+        }
+
+        private void CPUButton_Click(object sender, EventArgs e)
+        {
+            if (!isCPUMonitorOpen)
+            {
+                isCPUMonitorOpen = true;
+                Form3 Form3 = new Form3();
+                Form3.Show();
             }
         }
     }
