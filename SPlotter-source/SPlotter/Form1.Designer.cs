@@ -74,11 +74,17 @@
             this.PortSendInputField = new System.Windows.Forms.TextBox();
             this.SendToPort_Button = new System.Windows.Forms.Button();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.DataSendImage = new System.Windows.Forms.PictureBox();
+            this.DataReceiveImage = new System.Windows.Forms.PictureBox();
+            this.PortStates = new System.Windows.Forms.ImageList(this.components);
+            this.UpdatePortStateTimer = new System.Windows.Forms.Timer(this.components);
             this.Status.SuspendLayout();
             this.Tools.SuspendLayout();
             this.panel1.SuspendLayout();
             this.COMSettingsGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataSendImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataReceiveImage)).BeginInit();
             this.SuspendLayout();
             // 
             // serialPort1
@@ -510,12 +516,52 @@
             this.SendToPort_Button.UseVisualStyleBackColor = true;
             this.SendToPort_Button.Click += new System.EventHandler(this.SendToPort_Button_Click);
             // 
+            // DataSendImage
+            // 
+            this.DataSendImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.DataSendImage.ErrorImage = null;
+            this.DataSendImage.ImageLocation = "0; 0";
+            this.DataSendImage.InitialImage = null;
+            this.DataSendImage.Location = new System.Drawing.Point(952, 638);
+            this.DataSendImage.Name = "DataSendImage";
+            this.DataSendImage.Size = new System.Drawing.Size(20, 20);
+            this.DataSendImage.TabIndex = 24;
+            this.DataSendImage.TabStop = false;
+            // 
+            // DataReceiveImage
+            // 
+            this.DataReceiveImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.DataReceiveImage.ErrorImage = null;
+            this.DataReceiveImage.ImageLocation = "0; 0";
+            this.DataReceiveImage.InitialImage = null;
+            this.DataReceiveImage.Location = new System.Drawing.Point(926, 638);
+            this.DataReceiveImage.Name = "DataReceiveImage";
+            this.DataReceiveImage.Size = new System.Drawing.Size(20, 20);
+            this.DataReceiveImage.TabIndex = 25;
+            this.DataReceiveImage.TabStop = false;
+            // 
+            // PortStates
+            // 
+            this.PortStates.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("PortStates.ImageStream")));
+            this.PortStates.TransparentColor = System.Drawing.SystemColors.Control;
+            this.PortStates.Images.SetKeyName(0, "PortReceive.png");
+            this.PortStates.Images.SetKeyName(1, "PortSend.png");
+            this.PortStates.Images.SetKeyName(2, "PortUnactive.png");
+            // 
+            // UpdatePortStateTimer
+            // 
+            this.UpdatePortStateTimer.Enabled = true;
+            this.UpdatePortStateTimer.Interval = 1;
+            this.UpdatePortStateTimer.Tick += new System.EventHandler(this.UpdatePortStateTimer_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(987, 658);
+            this.Controls.Add(this.DataReceiveImage);
+            this.Controls.Add(this.DataSendImage);
             this.Controls.Add(this.Status);
             this.Controls.Add(this.SendToPort_Button);
             this.Controls.Add(this.PortSendInputField);
@@ -529,7 +575,7 @@
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "SPlotter v1.3";
+            this.Text = "SPlotter v1.3.1";
             this.Status.ResumeLayout(false);
             this.Status.PerformLayout();
             this.Tools.ResumeLayout(false);
@@ -539,6 +585,8 @@
             this.COMSettingsGroup.ResumeLayout(false);
             this.COMSettingsGroup.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataSendImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataReceiveImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -589,6 +637,10 @@
         private System.Windows.Forms.TextBox PointSize_InputField;
         private System.Windows.Forms.TextBox LineThickness_InputField;
         private System.Windows.Forms.ToolStripButton CPUButton;
+        private System.Windows.Forms.PictureBox DataSendImage;
+        private System.Windows.Forms.PictureBox DataReceiveImage;
+        private System.Windows.Forms.ImageList PortStates;
+        private System.Windows.Forms.Timer UpdatePortStateTimer;
     }
 }
 

@@ -27,6 +27,9 @@ namespace SPlotter
         public string[] SerialBufferList = { };
         string SerialBuffer = "";
 
+        int PortStateIterator = 0;
+        int PortStateIndex = 2;
+
         public bool isSettingsOpen = false;
         public bool isCPUMonitorOpen = false;
         public bool isRangeAddEnabled = false;
@@ -38,6 +41,9 @@ namespace SPlotter
         public Form1()
         {
             InitializeComponent();
+
+            DataReceiveImage = SetImage(DataReceiveImage, 2);
+            DataSendImage = SetImage(DataSendImage, 2);
 
             serialPort1.PortName = "COM1";
             serialPort1.BaudRate = 9600;
@@ -121,11 +127,13 @@ namespace SPlotter
 
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            SerialBuffer = serialPort1.ReadLine();
-            SerialBufferList = SerialBuffer.Split('&');
+            PortStateIndex = 0;
 
             try
             {
+                SerialBuffer = serialPort1.ReadLine();
+                SerialBufferList = SerialBuffer.Split('&');
+
                 if (!UpdateGraphTimer.Enabled && !isRangeAddEnabled && !isHighPerformanceEnabled)
                 {
                     for (int i = 0; i < Axles.Count; ++i)
@@ -398,6 +406,8 @@ namespace SPlotter
 
         private void SendToPort_Button_Click(object sender, EventArgs e)
         {
+            PortStateIndex = 1;
+
             try
             {
                 serialPort1.Write(PortSendInputField.Text);
@@ -410,6 +420,9 @@ namespace SPlotter
         {
             if (e.KeyCode == Keys.Enter)
             {
+                if (PortSendInputField.Text != "")
+                    PortStateIndex = 1;
+
                 try
                 {
                     serialPort1.Write(PortSendInputField.Text);
@@ -427,6 +440,64 @@ namespace SPlotter
                 Form3 Form3 = new Form3();
                 Form3.Show();
             }
+        }
+
+        public PictureBox SetImage(PictureBox obj, int indx)
+        {
+            obj.Image = PortStates.Images[indx];
+            obj.InitialImage = PortStates.Images[indx];
+            obj.ErrorImage = PortStates.Images[indx];
+
+            return obj;
+        }
+
+        public PictureBox BlinkImage(PictureBox obj, int indx)
+        {
+            obj.Image = PortStates.Images[indx];
+            obj.InitialImage = PortStates.Images[indx];
+            obj.ErrorImage = PortStates.Images[indx];
+
+            obj.Image = PortStates.Images[2];
+            obj.InitialImage = PortStates.Images[2];
+            obj.ErrorImage = PortStates.Images[2];
+
+            return obj;
+        }
+
+        private void UpdatePortStateTimer_Tick(object sender, EventArgs e)
+        {
+            if (PortStateIndex == 0)
+            {
+                DataReceiveImage.Image = PortStates.Images[PortStateIndex];
+                DataReceiveImage.InitialImage = PortStates.Images[PortStateIndex];
+                DataReceiveImage.ErrorImage = PortStates.Images[PortStateIndex];
+
+                PortStateIterator = 0;
+                PortStateIndex = 2;
+            }
+            else if (PortStateIndex == 1)
+            {
+                DataSendImage.Image = PortStates.Images[PortStateIndex];
+                DataSendImage.InitialImage = PortStates.Images[PortStateIndex];
+                DataSendImage.ErrorImage = PortStates.Images[PortStateIndex];
+
+                PortStateIterator = 0;
+                PortStateIndex = 2;
+            }
+
+            if (PortStateIterator >= 4)
+            {
+                DataReceiveImage.Image = PortStates.Images[2];
+                DataReceiveImage.InitialImage = PortStates.Images[2];
+                DataReceiveImage.ErrorImage = PortStates.Images[2];
+
+                DataSendImage.Image = PortStates.Images[2];
+                DataSendImage.InitialImage = PortStates.Images[2];
+                DataSendImage.ErrorImage = PortStates.Images[2];
+
+                PortStateIterator = 0;
+            }
+            PortStateIterator++;
         }
     }
 }
