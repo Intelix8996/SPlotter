@@ -1,3 +1,2 @@
-# SPlotter
-# (DEPRECATED)
+# SPlotter (DEPRECATED)
 Serial Port Plotter
